@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Sistema para Clínicas 
+                    Sistema para Clínicas
                 </div>
 
                 <div class="links">
