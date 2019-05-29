@@ -11,10 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+// BACKEND
+Route::group(['middleware' => ['auth'], 'as' => 'backend.'], function(){
+    Route::resource('role', 'RoleController');
+});
