@@ -8,21 +8,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="msapplication-tap-highlight" content="no">
 
-    <link href="css//materialize.css" type="text/css" rel="stylesheet">
-    <link href="css//style.css" type="text/css" rel="stylesheet">
-    <link href="css/custom/custom.css" type="text/css" rel="stylesheet">
-    <link href="vendors/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet">
-    <link href="vendors/flag-icon/css/flag-icon.min.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/materialize.css') }} rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/style.css') }} rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/custom.css') }} rel="stylesheet">
+    <link href="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }} rel="stylesheet">
+    <link href="{{ asset('assets/plugins/flag-icon/css/flag-icon.min.css') }} rel="stylesheet">
 
 </head>
 
 <body>
 
-<div id="loader-wrapper">
-    <div id="loader"></div>
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-</div>
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
 
 <header id="header" class="page-topbar">
     <div class="navbar-fixed">
@@ -158,10 +158,10 @@
     </div>
 </footer>
 
-<script type="text/javascript" src="vendors/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
-<script type="text/javascript" src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<script type="text/javascript" src="js/plugins.js"></script>
-<script type="text/javascript" src="js/custom-script.js"></script>
+<script src="{{ asset('assets/plugins/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('assets/backend/js/materialize.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/backend/js/plugins.js') }}"></script>
+<script src="{{ asset('assets/backend/js/custom-script.js') }}"></script>
 </body>
 </html>
