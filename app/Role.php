@@ -21,6 +21,23 @@ class Role extends Model
         return $this->belongsToMany('App\User')->withTimestamps();
     }
     //ALMACENAMIENTO - STORAGE
+    public function store($request)
+    {
+        $slug = str_slug($request->name, '-');
+        toast('Rol guardado','success','top-right');
+
+        return self::create($request->all() + [
+            'slug' => $slug,
+        ]);
+    }
+
+    public function my_update($request)
+    {
+        $slug = str_slug($request->name, '-');
+        self::update($request->all() + [
+            'slug' => $slug
+        ]);
+    }
 
     //VALIDACIÓN - VALIDATION
 

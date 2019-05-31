@@ -5,4 +5,6 @@
     <script src="{{ asset('assets/backend/js/plugins.js') }}"></script>
     <script src="{{ asset('assets/backend/js/custom-script.js') }}"></script>
 
+    @include('sweetalert::alert')
+
     @yield('foot')

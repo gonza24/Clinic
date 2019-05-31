@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Role\StoreRequest;
+use App\Http\Requests\Role\UpdateRequest;
 use App\Role;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,10 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return 'Hola desde controlador';
+        //FALTA AÑADIR AUTORIZACION
+        return view('theme.backend.pages.role.index', [
+            'roles' => Role::all(),
+        ]);
     }
 
     /**
@@ -24,7 +29,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        //FALTA AÑADIR AUTORIZACION
+        return view('theme.backend.pages.role.create');
     }
 
     /**
@@ -33,9 +39,10 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request, Role $role)
     {
-        //
+        $role = $role->store($request);
+        return redirect()->route('backend.role.show', $role);
     }
 
     /**
@@ -46,7 +53,10 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        //FALTA AÑADIR AUTORIZACION
+        return view('theme.backend.pages.role.show', [
+            'role' => $role,
+        ]);
     }
 
     /**
@@ -57,7 +67,10 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        //FALTA AÑADIR AUTORIZACION
+        return view('theme.backend.pages.role.edit', [
+            'role' => $role,
+        ]);
     }
 
     /**
@@ -67,9 +80,10 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRequest $request, Role $role)
     {
-        //
+        $role->my_update($request);
+        return redirect()->route('backend.role.show',$role);
     }
 
     /**
@@ -80,6 +94,6 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        //FALTA AÑADIR AUTORIZACION
     }
 }
