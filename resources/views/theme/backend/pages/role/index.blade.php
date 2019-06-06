@@ -5,6 +5,16 @@
 @section('head')
 @endsection
 
+@section('breadcrumbs')
+    {{-- <li><a href=""></a></li> --}}
+    <li><a href="{{ route('backend.role.index') }}">Roles del Sistema</a></li>
+@endsection
+
+@section('dropdown_settings')
+    {{-- <li><a href="" class="grey-text text-darken-2"></a></li> --}}
+    <li><a href="{{ route('backend.role.create') }}" class="grey-text text-darken-2">Crear rol</a></li>
+@endsection
+
 @section('content')
     <div class="section">
         <p class="caption"><strong>Roles del sistema</strong></p>

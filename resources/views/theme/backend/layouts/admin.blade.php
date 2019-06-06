@@ -13,6 +13,7 @@
                 @include('theme.backend.layouts.includes.left-sidebar')
 
                 <section id="content">
+                    @include('theme.backend.layouts.includes.breadcrumbs')
                     <div class="container">
                         @yield('content')
                     </div>

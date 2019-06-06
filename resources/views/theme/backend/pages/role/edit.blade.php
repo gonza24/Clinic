@@ -5,6 +5,13 @@
 @section('head')
 @endsection
 
+@section('breadcrumbs')
+    {{-- <li><a href=""></a></li> --}}
+    <li><a href="{{ route('backend.role.index') }}">Roles del Sistema</a></li>
+    <li><a href="{{ route('backend.role.show', $role) }}">{{ $role->name }}</a></li>
+    <li>Edición de rol</li>
+@endsection
+
 @section('content')
     <div class="section">
         <p class="caption">Edición del rol {{ $role->name }}</p>
@@ -12,8 +19,8 @@
         <div id="basic-form" class="section">
             <div class="row">
                 <div class="col s12 m8 offset-m2">
-                    <div class="card-panel">
-                        <h4 class="header2">Editar rol</h4>
+                    <div class="card">
+                        <div class="card-content">
                         <div class="row">
                             <form class="col s12" method="POST" action="{{ route('backend.role.update', $role) }}">
 
