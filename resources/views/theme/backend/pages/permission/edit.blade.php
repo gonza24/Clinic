@@ -1,0 +1,5 @@
+@extendos('')
+
+@section('content')
+
+@endsection

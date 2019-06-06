@@ -24,7 +24,9 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view('theme.backend.pages.permission.create',[
+            'roles' => \App\Role::all()
+        ]);
     }
 
     /**
@@ -35,7 +37,7 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
