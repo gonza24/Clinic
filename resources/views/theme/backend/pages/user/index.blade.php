@@ -1,23 +1,23 @@
 @extends('theme.backend.layouts.admin')
 
-@section('title', 'Permisos del sistema')
+@section('title', 'Ususarios del sistema')
 
 @section('head')
 @endsection
 
 @section('breadcrumbs')
     {{-- <li><a href=""></a></li> --}}
-            <li><a href="{{ route('backend.permission.index') }}">Permisos del Sistema</a></li>
+    <li><a href="{{ route('backend.user.index') }}">Usuarios del sistema</a></li>
 @endsection
 
 @section('dropdown_settings')
     {{-- <li><a href="" class="grey-text text-darken-2"></a></li> --}}
-    <li><a href="{{ route('backend.permission.create') }}" class="grey-text text-darken-2">Crear permiso</a></li>
+    <li><a href="{{ route('backend.user.create') }}" class="grey-text text-darken-2">Crear usuario</a></li>
 @endsection
 
 @section('content')
     <div class="section">
-        <p class="caption"><strong>Permisos del sistema</strong></p>
+        <p class="caption"><strong>Usuarios del sistema</strong></p>
         <div class="divider"></div>
         <div id="basic-form" class="section">
             <div class="row">
@@ -28,20 +28,18 @@
                                 <thead>
                                 <tr>
                                     <th>Nombre</th>
-                                    <th>Slug</th>
-                                    <th>Descripción</th>
-                                    <th>Rol</th>
+                                    <th>Edad</th>
+                                    <th>Correo</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($permissions as $permission)
+                                @foreach($users as $user)
                                     <tr>
-                                        <td><a href="{{ route('backend.permission.show', $permission) }}">{{ $permission->name }}</a></td>
-                                        <td>{{ $permission->slug }}</td>
-                                        <td>{{ $permission->description }}</td>
-                                        <td><a href="{{ route('backend.permission.show',$permission->role) }}">{{ $permission->role->name }}</a></td>
-                                        <td><a href="{{ route('backend.permission.edit', $permission) }}">Editar</a></td>
+                                        <td><a href="{{ route('backend.user.show', $user) }}">{{ $user->name }}</a></td>
+                                        <td>{{ $user->dob }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td><a href="{{ route('backend.user.edit', $user) }}">Editar</a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

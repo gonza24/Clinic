@@ -40,10 +40,24 @@
                             <span class="nav-text">Panel de administración</span>
                         </a>
                     </li>
+
+                    <li class="bold">
+                        <a href="{{ route('backend.user.index') }}" class="waves-effect waves-cyan">
+                            <i class="material-icons">people</i>
+                            <span class="nav-text">Usuarios del Sistema</span>
+                        </a>
+                    </li>
+
                     <li class="bold">
                         <a href="{{ route('backend.role.index') }}" class="waves-effect waves-cyan">
                             <i class="material-icons">perm_identity</i>
                             <span class="nav-text">Roles del Sistema</span>
+                        </a>
+                    </li>
+                    <li class="bold">
+                        <a href="{{ route('backend.permission.index') }}" class="waves-effect waves-cyan">
+                            <i class="material-icons">vpn_key</i>
+                            <span class="nav-text">Permisos del Sistema</span>
                         </a>
                     </li>
                 </ul>

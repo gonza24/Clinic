@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\Permission;
+use App\Http\Requests\Permission\StoreRequest;
+use App\Http\Requests\Permission\UpdateRequest;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -14,7 +17,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        return view('theme.backend.pages.permission.index', [
+            'permissions' => Permission::all()
+        ]);
     }
 
     /**
@@ -25,7 +30,7 @@ class PermissionController extends Controller
     public function create()
     {
         return view('theme.backend.pages.permission.create',[
-            'roles' => \App\Role::all()
+            'roles' => Role::all()
         ]);
     }
 
@@ -35,9 +40,10 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request, Permission $permission)
     {
-        dd($request);
+        $permission = $permission->store($request);
+        return redirect()->route('backend.permission.show', $permission);
     }
 
     /**
@@ -48,7 +54,9 @@ class PermissionController extends Controller
      */
     public function show(Permission $permission)
     {
-        //
+        return view('theme.backend.pages.permission.show', [
+            'permission' => $permission,
+        ]);
     }
 
     /**
@@ -59,7 +67,10 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        //
+        return view('theme.backend.pages.permission.edit', [
+            'permission' => $permission,
+            'roles' => Role::all()
+        ]);
     }
 
     /**
@@ -69,9 +80,10 @@ class PermissionController extends Controller
      * @param  \App\Permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Permission $permission)
+    public function update(UpdateRequest $request, Permission $permission)
     {
-        //
+        $permission = $permission->my_update($request);
+        return redirect()->route('backend.permission.show', $permission);
     }
 
     /**
@@ -82,6 +94,10 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        //
+        $role = $permission->role;
+        $permission->delete();
+        alert('Éxito', 'El permiso se ha eliminado', 'success')->showConfirmButton();
+        return redirect()->route('backend.role.show', $role);
+
     }
 }

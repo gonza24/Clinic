@@ -51,7 +51,13 @@ class User extends Authenticatable implements MustVerifyEmail
 //ALMACENAMIENTO - STORAGE
 
 //VALIDACIÓN - VALIDATION
-
+    public function has_role($id)
+    {
+        foreach ($this->roles as $role){
+            if ($role->id == $id || $role->slug == $id) return true;
+        }
+        return false;
+    }
 //RECUPERACIÓN DE INFORMACIÓN - DATA RECOVERY
 
 //OTRAS OPERACIONES - OTHER OPERATIONS

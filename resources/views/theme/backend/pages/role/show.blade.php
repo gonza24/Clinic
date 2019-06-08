@@ -1,6 +1,6 @@
 @extends('theme.backend.layouts.admin')
 
-@section('title', 'Este es el título')
+@section('title', $role->name)
 
 @section('head')
 @endsection
@@ -27,6 +27,36 @@
                         <div class="card-action">
                             <a href="{{route('backend.role.edit', $role)}}">EDITAR</a>
                             <a href="#" style="color: red" onclick="enviar_formulario()">ELIMINAR</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Permisos del rol</span>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Slug</th>
+                                    <th>Descripción</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($permissions as $permission)
+                                    <tr>
+                                        <td><a href="{{ route('backend.permission.show', $permission) }}">{{ $permission->name }}</a></td>
+                                        <td>{{ $permission->slug }}</td>
+                                        <td>{{ $permission->description }}</td>
+                                        <td><a href="{{ route('backend.permission.edit', $permission) }}">Editar</a></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

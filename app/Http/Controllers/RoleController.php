@@ -56,6 +56,7 @@ class RoleController extends Controller
         //FALTA AÑADIR AUTORIZACION
         return view('theme.backend.pages.role.show', [
             'role' => $role,
+            'permissions' => $role->permissions
         ]);
     }
 

@@ -18,6 +18,8 @@ class CreatePermissionsTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('description')->nullable();
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles')->onUpdated('cascade')->onDeleted('cascade');
             $table->timestamps();
         });
     }
