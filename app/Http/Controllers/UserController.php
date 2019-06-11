@@ -101,13 +101,35 @@ class UserController extends Controller
     }
 
     /**
-     * Asignar roles en la BD
+     * Asignar roles en tabla pivote de la BD
      *
      */
     public function role_assignment(Request $request, User $user)
     {
-        $user->roles()->sync($request->roles);
-        alert('Exito', 'Roles asignados', 'success');
+        $user->role_assignment($request);
+        return redirect()->route('backend.user.show', $user);
+    }
+
+    /**
+     * Mostrar formulario para la asignación de roles
+     *
+     */
+    public function assign_permission(User $user)
+    {
+        return view('theme.backend.pages.user.assign_permission', [
+            'user' => $user,
+            'roles' => $user->roles
+        ]);
+    }
+
+    /**
+     * Asignar permisos en la tabla pivote de la BD
+     *
+     */
+    public function permission_assignment(Request $request, User $user)
+    {
+        $user->permissions()->sync($request->permissions);
+        alert('Exiro', 'Permisos asignados', 'success');
         return redirect()->route('backend.user.show', $user);
     }
 }
