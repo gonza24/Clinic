@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\UpdateRequest;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\User\StoreRequest;
 
 class UserController extends Controller
 {
@@ -27,7 +29,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('theme.backend.pages.user.create', [
+            'roles' => Role::all()
+        ]);
     }
 
     /**
@@ -36,9 +40,10 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request, User $user)
     {
-        //
+        $user->store($request);
+        return redirect()->route('backend.user.show', $user);
     }
 
     /**
@@ -50,7 +55,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         return view('theme.backend.pages.user.show', [
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -60,9 +65,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('theme.backend.pages.user.edit', [
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -72,9 +79,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, User $user)
     {
-        //
+        $user->my_update($request);
+        return redirect()->route('backend.user.show', $user);
     }
 
     /**
@@ -83,9 +91,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        alert('Éxito', 'Usuario eliminado', 'success');
+        return redirect()->route('backend.user.index');
     }
 
     /**

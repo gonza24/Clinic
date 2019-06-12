@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -16,7 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name','dob', 'email', 'password',
     ];
 
     /**
@@ -27,6 +28,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $dates = ['dob'];
 
     /**
      * The attributes that should be cast to native types.
@@ -49,11 +52,28 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 //ALMACENAMIENTO - STORAGE
-    public function role_assignment($request)
+    public function store($request)
     {
-        $this->permission_mass_assignment($request->roles);
-        $this->roles()->sync($request->roles);
-        $this->verify_permission_integrity($request->roles);
+        $user = self::create($request->all());
+        $user->update(['password' => Hash::make($request->password)]);
+        $roles = [$request->role];
+        $user->role_assignment(null, $roles);
+        alert('Exito','Usuario creado con éxito', 'success');
+        return $user;
+    }
+
+    public function my_update($request)
+    {
+        self::update($request->all());
+        alert('Exito', 'Usuario actualizado', 'success');
+    }
+
+    public function role_assignment($request, array $roles = null)
+    {
+        $roles = (is_null($roles)) ? $request->roles : $roles;
+        $this->permission_mass_assignment($roles);
+        $this->roles()->sync($roles);
+        $this->verify_permission_integrity($roles);
         alert('Exito', 'Roles asignados', 'success');
     }
 
@@ -84,6 +104,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 //RECUPERACIÓN DE INFORMACIÓN - DATA RECOVERY
+    public function age()
+    {
+        if(!is_null($this->dob)){
+            $age = $this->dob->age;
+            $years = ($age == 1) ? 'año' : 'años';
+            $msj = $age . ' ' . $years;
+        }else{
+            $msj = 'Indefinido';
+        }
+        return $msj;
+    }
 
 //OTRAS OPERACIONES - OTHER OPERATIONS
     public function verify_permission_integrity(array $roles)
