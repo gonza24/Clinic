@@ -10,6 +10,11 @@ use App\Http\Requests\User\StoreRequest;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -156,5 +161,10 @@ class UserController extends Controller
         $user->permissions()->sync($request->permissions);
         alert('Exiro', 'Permisos asignados', 'success');
         return redirect()->route('backend.user.show', $user);
+    }
+
+    public function profile()
+    {
+        return view('theme.frontend.pages.user.profile');
     }
 }
