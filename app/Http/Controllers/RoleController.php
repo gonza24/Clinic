@@ -2,21 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\Http\Requests\Role\StoreRequest;
 use App\Http\Requests\Role\UpdateRequest;
-use App\Role;
-use Illuminate\Http\Request;
+
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:' . config('app.admin_role'));
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
-        //FALTA AÑADIR AUTORIZACION
+        $this->authorize('index',Role::class);
         return view('theme.backend.pages.role.index', [
             'roles' => Role::all(),
         ]);
@@ -26,17 +32,19 @@ class RoleController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
-        //FALTA AÑADIR AUTORIZACION
+        $this->authorize('create',Role::class);
         return view('theme.backend.pages.role.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreRequest $request
+     * @param Role $role
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRequest $request, Role $role)
@@ -48,27 +56,29 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Role  $role
+     * @param \App\Role $role
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Role $role)
     {
-        //FALTA AÑADIR AUTORIZACION
+        $this->authorize('view',$role);
         return view('theme.backend.pages.role.show', [
             'role' => $role,
-            'permissions' => $role->permissions
+            'permissions' => $role->permissions,
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Role  $role
+     * @param \App\Role $role
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Role $role)
     {
-        //FALTA AÑADIR AUTORIZACION
+        $this->authorize('update', $role);
         return view('theme.backend.pages.role.edit', [
             'role' => $role,
         ]);
@@ -77,27 +87,28 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Role  $role
+     * @param UpdateRequest $request
+     * @param \App\Role $role
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequest $request, Role $role)
     {
         $role->my_update($request);
-        return redirect()->route('backend.role.show',$role);
+        return redirect()->route('backend.role.show', $role);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Role  $role
+     * @param \App\Role $role
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Role $role)
     {
-        //FALTA AÑADIR AUTORIZACION
+        $this->authorize('delete', $role);
         $role->delete();
-        alert('Exito','Rol eliminado', 'success')->showConfirmButton();
+        alert('Éxito','Rol eliminado', 'success')->showConfirmButton();
         return redirect()->route('backend.role.index');
     }
 }

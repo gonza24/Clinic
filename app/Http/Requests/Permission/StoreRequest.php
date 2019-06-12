@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Http\Requests\Permission;
 
+use App\Permission;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -13,7 +13,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->user()->can('create', Permission::class);
     }
 
     /**
@@ -21,6 +21,7 @@ class StoreRequest extends FormRequest
      *
      * @return array
      */
+
     public function rules()
     {
         return [
@@ -33,11 +34,11 @@ class StoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'El campo es requerido',
-            'name.unique' => 'El nombre ya existe',
+            'name.required' => 'El campo de nombre es requerido',
+            'name.unique' => 'El nombre ya está ocupado',
             'description.required' => 'La descripción es requerida',
-            'role_id.required' => 'El campo del rol es requerido',
-            'role_id.numeric' => 'El formato no es correcto'
+            'role_id.required' => 'El campo de rol es requerido',
+            'role_id.numeric' => 'El formato no es correcto',
         ];
     }
 }

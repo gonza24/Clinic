@@ -40,7 +40,7 @@
                                         <td><a href="{{ route('backend.permission.show', $permission) }}">{{ $permission->name }}</a></td>
                                         <td>{{ $permission->slug }}</td>
                                         <td>{{ $permission->description }}</td>
-                                        <td><a href="{{ route('backend.permission.show',$permission->role) }}">{{ $permission->role->name }}</a></td>
+                                        <td><a href="{{ route('backend.role.show', $permission->role->id) }}">{{ $permission->role->name }}</a></td>
                                         <td><a href="{{ route('backend.permission.edit', $permission) }}">Editar</a></td>
                                     </tr>
                                 @endforeach

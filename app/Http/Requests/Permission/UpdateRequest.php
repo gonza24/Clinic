@@ -13,7 +13,8 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $permission = $this->route('permission');
+        return $this->user()->can('update', $permission);
     }
 
     /**
@@ -33,11 +34,11 @@ class UpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'El campo es requerido',
-            'name.unique' => 'El nombre ya existe',
+            'name.required' => 'El campo de nombre es requerido',
+            'name.unique' => 'El nombre ya está ocupado',
             'description.required' => 'La descripción es requerida',
-            'role_id.required' => 'El campo del rol es requerido',
-            'role_id.numeric' => 'El formato no es correcto'
+            'role_id.required' => 'El campo de rol es requerido',
+            'role_id.numeric' => 'El formato no es correcto',
         ];
     }
 }

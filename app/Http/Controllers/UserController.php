@@ -14,9 +14,11 @@ class UserController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->authorize('index', User::class);
         return view('theme.backend.pages.user.index', [
             'users' => User::all()
         ]);
@@ -26,9 +28,11 @@ class UserController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create', User::class);
         return view('theme.backend.pages.user.create', [
             'roles' => Role::all()
         ]);
@@ -37,23 +41,26 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreRequest $request
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRequest $request, User $user)
     {
-        $user->store($request);
+        $user = $user->store($request);
         return redirect()->route('backend.user.show', $user);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param User $user
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(User $user)
     {
+        $this->authorize('view', $user);
         return view('theme.backend.pages.user.show', [
             'user' => $user,
         ]);
@@ -62,11 +69,13 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param User $user
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
         return view('theme.backend.pages.user.edit', [
             'user' => $user,
         ]);
@@ -75,8 +84,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UpdateRequest $request
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequest $request, User $user)
@@ -88,11 +97,13 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param User $user
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
         $user->delete();
         alert('Éxito', 'Usuario eliminado', 'success');
         return redirect()->route('backend.user.index');
@@ -104,6 +115,7 @@ class UserController extends Controller
      */
     public function assign_role(User $user)
     {
+        $this->authorize('assign_role', $user);
         return view('theme.backend.pages.user.assign_role', [
            'user' => $user,
            'roles' => Role::all()
@@ -116,6 +128,7 @@ class UserController extends Controller
      */
     public function role_assignment(Request $request, User $user)
     {
+        $this->authorize('assign_role', $user);
         $user->role_assignment($request);
         return redirect()->route('backend.user.show', $user);
     }
@@ -126,6 +139,7 @@ class UserController extends Controller
      */
     public function assign_permission(User $user)
     {
+        $this->authorize('assign_permission', $user);
         return view('theme.backend.pages.user.assign_permission', [
             'user' => $user,
             'roles' => $user->roles
@@ -138,6 +152,7 @@ class UserController extends Controller
      */
     public function permission_assignment(Request $request, User $user)
     {
+        $this->authorize('assign_permission', $user);
         $user->permissions()->sync($request->permissions);
         alert('Exiro', 'Permisos asignados', 'success');
         return redirect()->route('backend.user.show', $user);
